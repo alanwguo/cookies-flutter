@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:cookies_flutter/data_store_lib/record.dart';
 
 import '../serializers.dart';
 import '../urn-lib/urn.dart';
@@ -9,7 +10,8 @@ import '../urn-lib/urn_serializer.dart';
 
 part 'player.g.dart';
 
-abstract class Player implements Built<Player, PlayerBuilder> {
+abstract class Player
+    implements Built<Player, PlayerBuilder>, Record<PlayerUrn> {
   // Fields
   PlayerUrn get entityUrn;
   String get name;

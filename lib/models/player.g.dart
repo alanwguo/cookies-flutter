@@ -7,6 +7,7 @@ part of 'player.dart';
 // **************************************************************************
 
 Serializer<Player> _$playerSerializer = new _$PlayerSerializer();
+Serializer<PlayerInput> _$playerInputSerializer = new _$PlayerInputSerializer();
 
 class _$PlayerSerializer implements StructuredSerializer<Player> {
   @override
@@ -45,6 +46,54 @@ class _$PlayerSerializer implements StructuredSerializer<Player> {
           result.entityUrn = serializers.deserialize(value,
               specifiedType: const FullType(PlayerUrn)) as PlayerUrn;
           break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'points':
+          result.points = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$PlayerInputSerializer implements StructuredSerializer<PlayerInput> {
+  @override
+  final Iterable<Type> types = const [PlayerInput, _$PlayerInput];
+  @override
+  final String wireName = 'PlayerInput';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, PlayerInput object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
+    if (object.points != null) {
+      result
+        ..add('points')
+        ..add(serializers.serialize(object.points,
+            specifiedType: const FullType(int)));
+    }
+    return result;
+  }
+
+  @override
+  PlayerInput deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PlayerInputBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -159,6 +208,91 @@ class PlayerBuilder implements Builder<Player, PlayerBuilder> {
   _$Player build() {
     final _$result =
         _$v ?? new _$Player._(entityUrn: entityUrn, name: name, points: points);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$PlayerInput extends PlayerInput {
+  @override
+  final String name;
+  @override
+  final int points;
+
+  factory _$PlayerInput([void Function(PlayerInputBuilder) updates]) =>
+      (new PlayerInputBuilder()..update(updates)).build();
+
+  _$PlayerInput._({this.name, this.points}) : super._() {
+    if (name == null) {
+      throw new BuiltValueNullFieldError('PlayerInput', 'name');
+    }
+  }
+
+  @override
+  PlayerInput rebuild(void Function(PlayerInputBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  PlayerInputBuilder toBuilder() => new PlayerInputBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is PlayerInput && name == other.name && points == other.points;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, name.hashCode), points.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('PlayerInput')
+          ..add('name', name)
+          ..add('points', points))
+        .toString();
+  }
+}
+
+class PlayerInputBuilder implements Builder<PlayerInput, PlayerInputBuilder> {
+  _$PlayerInput _$v;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  int _points;
+  int get points => _$this._points;
+  set points(int points) => _$this._points = points;
+
+  PlayerInputBuilder();
+
+  PlayerInputBuilder get _$this {
+    if (_$v != null) {
+      _name = _$v.name;
+      _points = _$v.points;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(PlayerInput other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$PlayerInput;
+  }
+
+  @override
+  void update(void Function(PlayerInputBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$PlayerInput build() {
+    final _$result = _$v ?? new _$PlayerInput._(name: name, points: points);
     replace(_$result);
     return _$result;
   }

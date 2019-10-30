@@ -41,6 +41,7 @@
 		"dart-code.dart-code",
 		"dart-code.flutter",
 		"luanpotter.dart-import",
-		"ms-azuretools.vscode-docker"
+		"ms-azuretools.vscode-docker",
+		"jeroen-meijer.pubspec-assist"
 	]
 }

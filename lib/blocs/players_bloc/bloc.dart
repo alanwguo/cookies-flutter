@@ -5,6 +5,9 @@ import 'package:cookies_flutter/data_store_lib/store.dart';
 import 'package:cookies_flutter/models/models.dart';
 import 'event.dart';
 import 'state.dart';
+import 'package:uuid/uuid.dart';
+
+final uuid = Uuid();
 
 class PlayersBloc extends Bloc<PlayersEvent, PlayersState> {
   final _store = Store<PlayerUrn, Player>();
@@ -19,7 +22,7 @@ class PlayersBloc extends Bloc<PlayersEvent, PlayersState> {
       yield* _mapFetchPlayersEventToState(event);
     } else if (event is UpdatePlayers) {
       yield* _mapUpdatePlayersEventToState(event);
-    } else if (event is AddPlayer) {
+    } else if (event is CreatePlayer) {
       yield* _mapAddPlayerEventToState(event);
     }
   }
@@ -37,8 +40,13 @@ class PlayersBloc extends Bloc<PlayersEvent, PlayersState> {
     yield PlayersLoaded(event.players);
   }
 
-  Stream<PlayersState> _mapAddPlayerEventToState(AddPlayer event) async* {
-    _store.addRecord(event.playerToAdd);
+  Stream<PlayersState> _mapAddPlayerEventToState(CreatePlayer event) async* {
+    final playerInput = event.playerToCreate;
+    final player = Player((b) => b
+      ..entityUrn = PlayerUrn(uuid.v4())
+      ..name = playerInput.name
+      ..points = playerInput.points);
+    _store.addRecord(player);
     // No State change necessary
     yield state;
   }

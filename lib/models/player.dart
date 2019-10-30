@@ -33,6 +33,30 @@ abstract class Player
   static Serializer<Player> get serializer => _$playerSerializer;
 }
 
+abstract class PlayerInput implements Built<PlayerInput, PlayerInputBuilder> {
+  // Fields
+
+  String get name;
+  @nullable
+  int get points;
+
+  PlayerInput._();
+
+  factory PlayerInput([void Function(PlayerInputBuilder) updates]) =
+      _$PlayerInput;
+
+  String toJson() {
+    return json.encode(serializers.serializeWith(PlayerInput.serializer, this));
+  }
+
+  static PlayerInput fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        PlayerInput.serializer, json.decode(jsonString));
+  }
+
+  static Serializer<PlayerInput> get serializer => _$playerInputSerializer;
+}
+
 class PlayerUrn extends Urn {
   static const kNamespace = 'aguo';
   static const kType = 'player';

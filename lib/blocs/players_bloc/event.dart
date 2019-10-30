@@ -38,17 +38,11 @@ class FetchPlayers extends PlayersEvent {
   const FetchPlayers();
 }
 
-int idGen = 1;
+class CreatePlayer extends PlayersEvent {
+  final PlayerInput playerToCreate;
 
-class AddPlayer extends PlayersEvent {
-  final Player playerToAdd;
-
-  AddPlayer()
-      : playerToAdd = Player((b) => b
-          ..entityUrn = PlayerUrn(idGen.toString())
-          ..name = "Alan $idGen"
-          ..points = idGen++);
+  CreatePlayer(this.playerToCreate);
 
   @override
-  List<Object> get props => [playerToAdd];
+  List<Object> get props => [playerToCreate];
 }

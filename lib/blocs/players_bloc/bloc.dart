@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:cookies_flutter/data_store_lib/store.dart';
-import 'package:cookies_flutter/models/models.dart';
+import 'package:pedantic/pedantic.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../data_store_lib/store.dart';
+import '../../models/models.dart';
 import 'event.dart';
 import 'state.dart';
-import 'package:uuid/uuid.dart';
 
 final uuid = Uuid();
 
@@ -28,7 +30,7 @@ class PlayersBloc extends Bloc<PlayersEvent, PlayersState> {
   }
 
   Stream<PlayersState> _mapFetchPlayersEventToState(FetchPlayers event) async* {
-    _fetchPlayersSubscription?.cancel();
+    unawaited(_fetchPlayersSubscription?.cancel());
     _fetchPlayersSubscription = _store.peekAll().listen((players) {
       add(UpdatePlayers(players));
     });

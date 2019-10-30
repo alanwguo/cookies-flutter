@@ -5,8 +5,9 @@ import 'models/models.dart';
 
 part 'serializers.g.dart';
 
-@SerializersFor(const [
+@SerializersFor([
   Player,
+  PlayerInput,
   PlayerUrn,
 ])
 Serializers serializers =

@@ -1,4 +1,4 @@
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:cookies_flutter/models/player.dart';
 import 'package:cookies_flutter/serializers.dart';
 

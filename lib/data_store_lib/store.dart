@@ -8,6 +8,7 @@ import 'record.dart';
 
 part 'internal_cache.dart';
 
+/// Class that allows you to create, add, and retrieve models
 class Store<UrnType extends Urn, Model extends Record<UrnType>> {
   final _internalCache = _InternalCache<UrnType, Model>();
   BehaviorSubject<ValueObservable<Iterable<Model>>> _getAllSubject;

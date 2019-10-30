@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/players_bloc/players_bloc.dart';
-import 'players_list.dart';
+import 'routes.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -40,9 +40,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: '/',
+        initialRoute: PlayersList.routeName,
         routes: {
-          '/': (context) => PlayersList(),
+          PlayersList.routeName: (context) => PlayersList(),
+          PlayerFormRoute.routeName: (context) => PlayerFormRoute(),
         },
       ),
     );

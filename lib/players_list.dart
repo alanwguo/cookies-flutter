@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/players_bloc/players_bloc.dart';
+import 'player_form_route.dart';
 
 class PlayersList extends StatelessWidget {
+  static const routeName = '/';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +16,7 @@ class PlayersList extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              // Do nothing for now
+              Navigator.pushNamed(context, PlayerFormRoute.routeName);
             },
           )
         ],
@@ -28,7 +31,7 @@ class PlayersList extends StatelessWidget {
             return ListView.separated(
               itemCount: players.length,
               itemBuilder: (context, index) {
-                final player = players[index];
+                final player = players.elementAt(index);
                 return Text(
                     'urn: ${player.entityUrn}, name: ${player.name}, points: ${player.points}');
               },

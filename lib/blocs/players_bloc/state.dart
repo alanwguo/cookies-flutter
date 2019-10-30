@@ -14,7 +14,7 @@ abstract class PlayersState extends Equatable {
 class PlayersLoading extends PlayersState {}
 
 class PlayersLoaded extends PlayersState {
-  final List<Player> players;
+  final Iterable<Player> players;
 
   const PlayersLoaded(this.players);
 

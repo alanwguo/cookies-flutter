@@ -18,7 +18,7 @@ enum SourceOfUpdate {
 }
 
 class UpdatePlayers extends PlayersEvent {
-  final List<Player> players;
+  final Iterable<Player> players;
 
   /// Used primarily for debugging purposes
   final SourceOfUpdate sourceOfUpdate;

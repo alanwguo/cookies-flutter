@@ -50,6 +50,10 @@ class PlayersBloc extends Bloc<PlayersEvent, PlayersState> {
       ..points = playerInput.points);
     _store.addRecord(player);
     // No State change necessary
-    yield state;
+    if (state is PlayersLoaded) {
+      yield state;
+    } else {
+      add(FetchPlayers());
+    }
   }
 }

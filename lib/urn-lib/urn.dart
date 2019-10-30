@@ -6,7 +6,7 @@ abstract class Urn {
   String get type;
   String get id;
 
-  String toString() => "urn:$namespace:$type:$id";
+  String toString() => 'urn:$namespace:$type:$id';
 
   const Urn();
 
@@ -28,7 +28,7 @@ abstract class Urn {
     return parts[3];
   }
 
-  bool operator ==(o) =>
+  bool operator ==(dynamic o) =>
       o is Urn && o.namespace == namespace && o.type == type && o.id == id;
 
   int get hashCode => namespace.hashCode ^ type.hashCode ^ id.hashCode;

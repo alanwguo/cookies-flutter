@@ -13,10 +13,8 @@ class RecordFinderResult<UrnType extends Urn, Model extends Record<UrnType>> {
   RecordFinderResult(this._internalCache, this.urns);
 
   void updateUrns(List<UrnType> newUrnsToFind) {
-    if (newUrnsToFind != urns) {
-      urns = newUrnsToFind;
-      _updateRecordsSubject();
-    }
+    urns = newUrnsToFind;
+    _updateRecordsSubject();
   }
 
   Stream<Iterable<Model>> peek() {

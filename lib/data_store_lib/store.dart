@@ -20,7 +20,7 @@ class Store<UrnType extends Urn, Model extends Record<UrnType>> {
 
   Stream<Iterable<Model>> peekAll() => _getAllFinder.peek();
 
-  Stream<Model> peekRecord(Urn entityUrn) =>
+  Stream<Model> peekRecord(UrnType entityUrn) =>
       _internalCache.get(entityUrn).stream;
 
   void addRecord(Model model) {

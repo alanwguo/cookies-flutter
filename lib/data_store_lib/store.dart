@@ -7,30 +7,18 @@ import '../urn-lib/urn.dart';
 import 'record.dart';
 
 part 'internal_cache.dart';
+part 'record_finder_result.dart';
 
 /// Class that allows you to create, add, and retrieve models
 class Store<UrnType extends Urn, Model extends Record<UrnType>> {
   final _internalCache = _InternalCache<UrnType, Model>();
-  BehaviorSubject<ValueObservable<Iterable<Model>>> _getAllSubject;
-  StreamSubscription<Iterable<Model>> _getAllSubjectSubscription;
+  RecordFinderResult<UrnType, Model> _getAllFinder;
 
-  Store();
-
-  Stream<Iterable<Model>> peekAll() {
-    if (_getAllSubject == null) {
-      final subjects = _internalCache.values;
-      if (subjects.isNotEmpty) {
-        _getAllSubjectSubscription?.cancel();
-        final combinedObservable =
-            Observable.combineLatestList(_internalCache.values).publishValue();
-        _getAllSubject = BehaviorSubject.seeded(combinedObservable);
-        _getAllSubjectSubscription = combinedObservable.connect();
-      } else {
-        _getAllSubject = BehaviorSubject.seeded(BehaviorSubject.seeded([]));
-      }
-    }
-    return _getAllSubject.flatMap((stream) => stream);
+  Store() {
+    _getAllFinder = RecordFinderResult(_internalCache, []);
   }
+
+  Stream<Iterable<Model>> peekAll() => _getAllFinder.peek();
 
   Stream<Model> peekRecord(Urn entityUrn) =>
       _internalCache.get(entityUrn).stream;
@@ -39,11 +27,7 @@ class Store<UrnType extends Urn, Model extends Record<UrnType>> {
     final containsKey = _internalCache.containsKey(model.entityUrn);
     _internalCache.put(model.entityUrn, model);
     if (!containsKey) {
-      _getAllSubjectSubscription?.cancel();
-      final combinedObservable =
-          Observable.combineLatestList(_internalCache.values).publishValue();
-      _getAllSubject?.add(combinedObservable);
-      _getAllSubjectSubscription = combinedObservable.connect();
+      _getAllFinder.updateUrns(_getAllFinder.urns..add(model.entityUrn));
     }
   }
 }
